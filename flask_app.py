@@ -1,0 +1,100 @@
+<<<<<<< HEAD
+from flask import Flask, render_template
+import os
+
+# Inizializza l'applicazione Flask
+app = Flask(__name__)
+
+
+# Ottiene tutti i file .html dalla cartella templates
+# Li usiamo per creare i link nell'indice
+def get_available_years():
+    import os
+    # Cerca i file nella sottocartella 'templates'
+    template_dir = os.path.join(app.root_path, 'templates')
+
+    # Filtra solo i nomi dei file che terminano con .html ed estrai l'anno (es. '2025')
+    years = [
+        f.replace('.html', '')
+        for f in os.listdir(template_dir)
+        if f.endswith('.html') and f != 'index.html'
+    ]
+    # Ordina gli anni in ordine decrescente
+    return sorted(years, reverse=True)
+
+
+# 1. Route principale: visualizza l'indice con i link agli anni
+@app.route('/')
+def index():
+    years = get_available_years()
+    # Passa la lista degli anni al template index.html
+    return render_template('index.html', years=years)
+
+
+# 2. Route dinamica: visualizza la pagina HTML dell'anno specifico
+# L'URL sarà: /anno/2025, /anno/2024, ecc.
+@app.route('/anno/<year>')
+def show_year_data(year):
+    # Controlla se il file esiste prima di provare a renderizzarlo
+    file_name = f"{year}.html"
+    if file_name in os.listdir(os.path.join(app.root_path, 'templates')):
+        # Usa render_template per caricare direttamente il file HTML esistente
+        return render_template(file_name, current_year=year)
+    else:
+        # Ritorna un errore 404 se il file non esiste
+        return "Errore 404: Archivio per l'anno specificato non trovato.", 404
+
+
+if __name__ == '__main__':
+    # Avvia il server in modalità debug (utile durante lo sviluppo)
+=======
+from flask import Flask, render_template
+import os
+
+# Inizializza l'applicazione Flask
+app = Flask(__name__)
+
+
+# Ottiene tutti i file .html dalla cartella templates
+# Li usiamo per creare i link nell'indice
+def get_available_years():
+    import os
+    # Cerca i file nella sottocartella 'templates'
+    template_dir = os.path.join(app.root_path, 'templates')
+
+    # Filtra solo i nomi dei file che terminano con .html ed estrai l'anno (es. '2025')
+    years = [
+        f.replace('.html', '')
+        for f in os.listdir(template_dir)
+        if f.endswith('.html') and f != 'index.html'
+    ]
+    # Ordina gli anni in ordine decrescente
+    return sorted(years, reverse=True)
+
+
+# 1. Route principale: visualizza l'indice con i link agli anni
+@app.route('/')
+def index():
+    years = get_available_years()
+    # Passa la lista degli anni al template index.html
+    return render_template('index.html', years=years)
+
+
+# 2. Route dinamica: visualizza la pagina HTML dell'anno specifico
+# L'URL sarà: /anno/2025, /anno/2024, ecc.
+@app.route('/anno/<year>')
+def show_year_data(year):
+    # Controlla se il file esiste prima di provare a renderizzarlo
+    file_name = f"{year}.html"
+    if file_name in os.listdir(os.path.join(app.root_path, 'templates')):
+        # Usa render_template per caricare direttamente il file HTML esistente
+        return render_template(file_name, current_year=year)
+    else:
+        # Ritorna un errore 404 se il file non esiste
+        return "Errore 404: Archivio per l'anno specificato non trovato.", 404
+
+
+if __name__ == '__main__':
+    # Avvia il server in modalità debug (utile durante lo sviluppo)
+>>>>>>> 8e38eba41ae54c014da3a92541f82b7dcb55de60
+    app.run(debug=True)
