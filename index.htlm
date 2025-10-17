@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <title>Archivio Estrazioni</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        h1 { color: #333; }
+        ul { list-style: none; padding: 0; }
+        li { margin-bottom: 10px; }
+        a { text-decoration: none; color: #007BFF; font-weight: bold; }
+        a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <h1>Archivio Storico Estrazioni</h1>
+    <p>Seleziona l'anno di cui vuoi visualizzare i risultati:</p>
+
+    <ul>
+        {% for year in years %}
+        <li>
+            <a href="/anno/{{ year }}">Archivio Estrazioni Anno {{ year }}</a>
+        </li>
+        {% endfor %}
+    </ul>
+
+</body>
+</html>
